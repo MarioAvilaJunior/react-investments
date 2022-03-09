@@ -13,14 +13,18 @@ const Investment = ({ id, description, reports = [] }) => {
   };
 
   const calculateDifference = (filteredReports) => {
-    const differenceArray = [0];
+    const differenceArray = ["0%"];
     for (let i = 1; i < filteredReports.length; i++) {
+      let currentElement = filteredReports[i].value;
+      let previousElement = filteredReports[i - 1].value;
       differenceArray.push(
-        (filteredReports[i].value - filteredReports[i - 1].value).toFixed(2)
+        ((currentElement - previousElement) / previousElement).toFixed(2) + "%"
       );
     }
     return differenceArray;
   };
+
+  const differenceArray = calculateDifference(filteredReports);
 
   return (
     <div
@@ -39,12 +43,15 @@ const Investment = ({ id, description, reports = [] }) => {
                 month={report.month}
                 year={report.year}
                 value={report.value}
-                difference={calculateDifference(report, index)}
               ></Report>
             );
           })}
-          {calculateDifference(filteredReports)}
         </li>
+      </ul>
+      <ul>
+        {differenceArray.map((value) => {
+          return <li>{value}</li>;
+        })}
       </ul>
     </div>
   );
