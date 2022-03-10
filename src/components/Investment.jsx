@@ -50,7 +50,11 @@ const Investment = ({ id, description, reports = [] }) => {
       </ul>
       <ul>
         {differenceArray.map((value) => {
-          return <li>{value}</li>;
+          return (
+            <li className={value >= 0 ? "bg-green-400" : "bg-red-600"}>
+              {value}
+            </li>
+          );
         })}
       </ul>
     </div>
